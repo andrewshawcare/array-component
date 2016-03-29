@@ -1,5 +1,7 @@
 FROM node:5.9.1
 
+EXPOSE 80
+
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
