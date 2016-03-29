@@ -1,0 +1,7 @@
+describe("An array component", function () {
+  it("creates an ordered list from an array", function () {
+    var array = ["apple", "carrot", "steak"];
+    var arrayComponent = ArrayComponent(array);
+    expect(arrayComponent.classList).toContain("array");
+  });
+});

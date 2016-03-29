@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+  <head>
+    <title></title>
+    <link rel="stylesheet" href="./node_modules/jasmine-core/lib/jasmine-core/jasmine.css"/>
+    <link rel="stylesheet" href="./stylesheet.css"/>
+  </head>
+  <body>
+    <script src="./node_modules/jasmine-core/lib/jasmine-core/jasmine.js"></script>
+    <script src="./node_modules/jasmine-core/lib/jasmine-core/jasmine-html.js"></script>
+    <script src="./node_modules/jasmine-core/lib/jasmine-core/boot.js"></script>
+    <script src="./node_modules/ace-builds/src-noconflict/ace.js"></script>
+    <script src="./index.js"></script>
+    <script src="./spec/test.js"></script>
+    <script>
+      var getJson = function (url, callback) {
+        var request = new XMLHttpRequest();
+        request.open("GET", url);
+        request.onload = function () {
+          callback(JSON.parse(request.responseText));
+        };
+        request.send();
+      };
+
+      var Example = function(package, data) {
+        document.title = package.name;
+
+        var exampleElement = document.createElement("article");
+        exampleElement.classList.add("example");
+
+        var headerElement = document.createElement("header");
+        headerElement.classList.add("header");
+        exampleElement.appendChild(headerElement);
+
+        var nameElement = document.createElement("h1");
+        nameElement.innerText = package.name;
+        headerElement.appendChild(nameElement);
+
+        var descriptionElement = document.createElement("p");
+        descriptionElement.innerText = package.description;
+        headerElement.appendChild(descriptionElement);
+
+        var editorElement = document.createElement("section");
+        editorElement.classList.add("editor");
+        exampleElement.appendChild(editorElement);
+
+        var editor = ace.edit(editorElement);
+        editor.setTheme("ace/theme/github")
+
+        var session = editor.getSession();
+        session.setValue(JSON.stringify(data));
+        session.setMode("ace/mode/json");
+        session.on("change", function (event) {
+          try {
+            var data = JSON.parse(session.getValue());
+            previewElement.innerHTML = "";
+            previewElement.appendChild(ArrayComponent(data));
+          } catch (error) {
+            console.log(error);
+          }
+        });
+
+        var previewElement = document.createElement("section");
+        previewElement.classList.add("preview");
+        previewElement.appendChild(ArrayComponent(data));
+        exampleElement.appendChild(previewElement);
+
+        var specElement = document.createElement("section");
+        specElement.classList.add("spec");
+        var jasmineHtmlReporterElement = document.querySelector(".jasmine_html-reporter");
+        specElement.appendChild(jasmineHtmlReporterElement);
+        exampleElement.appendChild(specElement);
+
+        return exampleElement;
+      };
+
+      getJson("/package.json", function (package) {
+        getJson("/data.json", function (data) {
+          document.body.appendChild(Example(package, data));
+        });
+      });
+    </script>
+  </body>
+</html>
