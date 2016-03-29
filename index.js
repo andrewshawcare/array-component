@@ -3,6 +3,7 @@ ArrayComponent = function (array) {
   arrayElement.classList.add("array");
   array.forEach(function (item) {
     var itemElement = document.createElement("li");
+    itemElement.classList.add("item");
     itemElement.innerText = item;
     arrayElement.appendChild(itemElement);
   });
