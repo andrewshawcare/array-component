@@ -1,8 +1,11 @@
 version: "2"
 services:
-  array-component:
-    build: .
+  workshop:
+    image: andrewshawcare/component-workshop
+    environment:
+      - COMPONENT_PATH=./array-component
     ports:
-      - '80'
+      - '80:80'
+      - '35729:35729'
     volumes:
-      - ./:/usr/src/app
+      - ./:/usr/src/app/array-component
