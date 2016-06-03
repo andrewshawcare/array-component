@@ -1,6 +1,6 @@
 /*global define */
 define([
-  "./node_modules/primitive-component/index"
+  "node_modules/primitive-component/index"
 ], function (
   PrimitiveComponent
 ) { "use strict";
