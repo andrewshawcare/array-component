@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/jasmine"
+    "test": "JASMINE_CONFIG_PATH=jasmine.json ./node_modules/.bin/jasmine"
   },
   "description": "Renders a JavaScript array as an HTML ordered list",
   "keywords": ["array", "component", "html", "view"],
